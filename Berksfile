@@ -1,14 +1,25 @@
-#
 # vim: set ft=ruby:
-#
 site :opscode
 
 metadata
+group "ktc" do
+  cookbook 'ktc-sensu',
+    github: 'cloudware-cookbooks/ktc-sensu'
+end
 
-# solo-search for intgration tests
-group :integration do
-  cookbook 'chef-solo-search', github: 'edelight/chef-solo-search'
+# These RCB-based cookbooks will be replaced with new internal cookbooks that use stackforge's library.
+group "other" do
+  cookbook "collectd", 
+    github: "rcbops-cookbooks/collectd", branch: "grizzly"
+  cookbook "collectd-plugins", 
+    github: "rcbops-cookbooks/collectd-plugins", branch: "grizzly"
+  cookbook "collectd-graphite", 
+    github: "cloudware-cookbooks/collectd-graphite", branch: "develop"
+  cookbook "graphite", 
+    github: "rcbops-cookbooks/graphite", branch: "grizzly"
+end
 
-# add in a test cook for minitest or to twiddle an LWRP
-#  cookbook 'my_cook_test', :path => './test/cookbooks/my_cook_test'
+group "integration" do
+  cookbook 'chef-solo-search',
+    github: 'edelight/chef-solo-search'
 end
