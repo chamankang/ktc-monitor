@@ -4,6 +4,6 @@
 default[:monitor][:client_recipes] = []
 
 default[:monitor][:client_recipes].concat %w{
-  collectd-graphite::client
+  ktc-collectd::client_collectd
   ktc-sensu::client
 }

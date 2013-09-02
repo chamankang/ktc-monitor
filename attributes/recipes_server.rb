@@ -4,8 +4,8 @@
 default[:monitor][:server_recipes] = []
 
 default[:monitor][:server_recipes].concat %w{
-  graphite::graphite
-  graphite::carbon
-  collectd-graphite::collectd-listener
+  graphite
+  collectd::server
+  ktc-collectd::client_graphite
   ktc-sensu::master
 }
