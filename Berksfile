@@ -3,20 +3,13 @@ site :opscode
 
 metadata
 group "ktc" do
-  cookbook 'ktc-sensu',
-    github: 'cloudware-cookbooks/ktc-sensu'
+  cookbook 'ktc-collectd', github: 'cloudware-cookbooks/ktc-collectd'
+  cookbook 'ktc-sensu', github: 'cloudware-cookbooks/ktc-sensu'
 end
 
-# These RCB-based cookbooks will be replaced with new internal cookbooks that use stackforge's library.
 group "other" do
-  cookbook "collectd", 
-    github: "rcbops-cookbooks/collectd", branch: "grizzly"
-  cookbook "collectd-plugins", 
-    github: "rcbops-cookbooks/collectd-plugins", branch: "grizzly"
-  cookbook "collectd-graphite", 
-    github: "cloudware-cookbooks/collectd-graphite", branch: "develop"
-  cookbook "graphite", 
-    github: "rcbops-cookbooks/graphite", branch: "grizzly"
+  cookbook "collectd", github: "miah/chef-collectd"
+  cookbook "graphite", github: "hw-cookbooks/graphite"
 end
 
 group "integration" do
