@@ -1,10 +1,10 @@
 #
 # CookBook:: ktc-monitor
-# Recipe:: client
+# Recipe:: server
 #
 
 # include recipes from our run_list attribute
 #
-node[:monitor][:recipes_client].each do |recipe|
+node[:monitor][:recipes_server_collectd].each do |recipe|
   include_recipe recipe
 end

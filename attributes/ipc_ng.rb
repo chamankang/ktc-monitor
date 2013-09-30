@@ -1,7 +1,10 @@
-# No defaults
+#
+# Attributes for ipc_ng environment
+#
 
-include_attribute "graphite"
-include_attribute "ktc-sensu"
+return unless chef_environment == "ipc_ng"
+
+include_attribute "ktc-monitor::default"
 
 default[:monitor][:recipes_server_collectd] = []
 default[:monitor][:recipes_server_collectd].concat %w{
@@ -21,14 +24,9 @@ default[:monitor][:recipes_client].concat %w{
   ktc-sensu::client
 }
 
-default[:sensu][:graphite_address] = ""
+default[:monitor][:splunk][:ip] = "10.2.2.81"
+default[:monitor][:splunk][:port] = "4110"
+
+default[:sensu][:graphite_address] = "monitor01-vm.mgmt1.ipc-ng"
 default[:sensu][:graphite_port] = 2003
 default[:sensu][:hipchat_room] = "sensu-alert"
-
-default['graphite']['storage_schemas'] = [
-  {
-    'name' => 'catchall',
-    'pattern' => '^.*',
-    'retentions' => '60s:30d,900s:1y'
-  }
-]
