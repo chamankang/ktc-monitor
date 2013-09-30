@@ -10,6 +10,8 @@ group "ktc" do
 end
 
 group "other" do
+  cookbook "yum", github: 'opscode-cookbooks/yum'
+  cookbook "ubuntu", github: 'opscode-cookbooks/ubuntu'
   cookbook "memcached", github: "opscode-cookbooks/memcached"
   cookbook "collectd", github: "miah/chef-collectd"
   cookbook "graphite", github: "hw-cookbooks/graphite"
