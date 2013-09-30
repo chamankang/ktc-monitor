@@ -1,5 +1,3 @@
-# No defaults
-
 include_attribute "graphite"
 include_attribute "ktc-sensu"
 
