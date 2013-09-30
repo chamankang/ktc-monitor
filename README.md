@@ -1,2 +1,2 @@
-TLC monitor cook which includes collectd, graphite and sensu cooks.
+Monitoring TLC which includes collectd, graphite and sensu cooks.
 
