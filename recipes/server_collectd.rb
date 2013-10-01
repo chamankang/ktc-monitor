@@ -1,6 +1,6 @@
 #
 # CookBook:: ktc-monitor
-# Recipe:: server
+# Recipe:: server_collectd
 #
 
 # include recipes from our run_list attribute
