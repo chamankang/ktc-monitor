@@ -2,22 +2,19 @@ include_attribute "graphite"
 include_attribute "ktc-sensu"
 
 default[:monitor][:recipes_server_collectd] = %w{
-  collectd::server
-  ktc-collectd::client_graphite
 }
 
 default[:monitor][:recipes_server_graphite] = %w{
-  graphite
 }
 
 default[:monitor][:recipes_server_sensu] = %w{
-  ktc-sensu::master
 }
 
 default[:monitor][:recipes_client] = %w{
-  ktc-collectd::client_collectd
-  ktc-sensu::client
 }
+
+default[:monitor][:splunk][:ip] = ""
+default[:monitor][:splunk][:port] = ""
 
 default[:sensu][:graphite_address] = ""
 default[:sensu][:graphite_port] = 2003

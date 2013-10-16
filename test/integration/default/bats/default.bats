@@ -4,6 +4,6 @@
   [ "$(ps aux | grep collectd | grep -v grep)" ]
 }
 
-@test "should have sensu running" {
-  [ "$(ps aux | grep sensu | grep -v grep)" ]
+@test "should have carbon-cache running" {
+  [ "$(ps aux | grep carbon-cache | grep -v grep)" ]
 }
