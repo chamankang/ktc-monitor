@@ -15,6 +15,15 @@ default[:monitor][:recipes_server_collectd] = %w{
 default[:monitor][:recipes_server_graphite] = %w{
 }
 
+default[:monitor][:recipes_server_sensu] = %w{
+  ktc-sensu::master
+}
+
+default[:monitor][:recipes_client] = %w{
+  ktc-collectd::client_collectd
+  ktc-sensu::client
+}
+
 default[:monitor][:splunk][:ip] = "10.2.2.81"
 default[:monitor][:splunk][:port] = "4110"
 

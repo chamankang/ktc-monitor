@@ -15,7 +15,12 @@ suites:
   run_list:
     - recipe[ubuntu]
     - recipe[ktc-monitor::server_collectd]
-  attributes: {}
+  attributes:
+    monitor:
+      recipes_server_collectd:
+        - graphite
+        - collectd::server
+        - ktc-collectd::client_graphite
 
 clusters:
   default:
