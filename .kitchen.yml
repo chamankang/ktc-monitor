@@ -1,7 +1,5 @@
 ---
 driver_plugin: vagrant
-# if you want to use chef-zero instead of solo-search
-# uncomment this
 provisioner: chef_zero
 
 platforms:
@@ -13,7 +11,7 @@ platforms:
 suites:
 - name: default
   run_list:
-    - recipe[ubuntu]
+    - recipe[ktc-testing]
     - recipe[ktc-monitor::server_collectd]
   attributes:
     monitor:
