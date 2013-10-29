@@ -17,6 +17,10 @@ default[:monitor][:recipes_server_graphite] = %w{
 
 default[:monitor][:recipes_server_sensu] = %w{
   ktc-sensu::master
+  ktc-gdash
+}
+
+default[:monitor][:recipes_server_gdash] = %w{
 }
 
 default[:monitor][:recipes_client] = %w{
@@ -29,3 +33,8 @@ default[:monitor][:splunk][:port] = "4110"
 
 # TODO: This endpoint shoudl be handled with Services library in ktc-sensu.
 default[:sensu][:graphite_address] = "monitor01-vm.mgmt1.ipc-ng"
+
+# TODO: This endpoint should be handled with Services library in ktc-gdash.
+# This url should be IP address, not hostname.
+default[:gdash][:graphite_url] = ""
+default[:gdash][:title] = "IPC-NG"
