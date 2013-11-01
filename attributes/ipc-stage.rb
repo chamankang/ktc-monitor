@@ -2,7 +2,7 @@
 # Attributes for ipc_ng environment
 #
 
-return unless chef_environment == "ipc_ng"
+return unless chef_environment == "ipc-stage"
 
 include_attribute "ktc-monitor::default"
 
@@ -32,7 +32,7 @@ default[:monitor][:splunk][:ip] = "10.2.2.81"
 default[:monitor][:splunk][:port] = "4110"
 
 # TODO: This endpoint shoudl be handled with Services library in ktc-sensu.
-default[:sensu][:graphite_address] = "monitor01-vm.mgmt1.ipc-ng"
+default[:sensu][:graphite_address] = "monitor01-vm.mgmt1.ipc-stage"
 
 # TODO: This endpoint should be handled with Services library in ktc-gdash.
 # This url should be IP address, not hostname.
