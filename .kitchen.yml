@@ -19,6 +19,7 @@ suites:
         - graphite
         - collectd::server
         - ktc-collectd::client_graphite
+        - ktc-collectd::client_splunk
 
 clusters:
   default:
