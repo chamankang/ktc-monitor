@@ -1,5 +1,5 @@
 name    "ktc-monitor"
-version '1.0.1'
+version '1.0.3'
 
 depends "graphite"
 depends "ktc-collectd"
