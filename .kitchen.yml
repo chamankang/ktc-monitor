@@ -12,14 +12,8 @@ suites:
 - name: default
   run_list:
     - recipe[ktc-testing]
+    - recipe[ktc-monitor::server_graphite]
     - recipe[ktc-monitor::server_collectd]
-  attributes:
-    monitor:
-      recipes_server_collectd:
-        - graphite
-        - collectd::server
-        - ktc-collectd::client_graphite
-        - ktc-collectd::client_splunk
 
 clusters:
   default:
