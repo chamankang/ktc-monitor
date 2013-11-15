@@ -11,6 +11,7 @@ default[:monitor][:recipes_server_collectd] = %w{
   graphite
   collectd::server
   ktc-collectd::client_graphite
+  ktc-collectd::client_splunk
 }
 
 default[:monitor][:recipes_server_graphite] = %w{
@@ -28,6 +29,10 @@ default[:monitor][:recipes_client] = %w{
   ktc-collectd::client_collectd
   ktc-sensu::client
 }
+
+# Forward metrics to Splunk
+default[:monitor][:splunk][:ip] = "10.2.2.81"
+default[:monitor][:splunk][:port] = "4110"
 
 # TODO: This endpoint should be handled with Services library in ktc-sensu.
 default[:sensu][:graphite_address] = "monitor01-vm.mgmt1.ipc-stage"
