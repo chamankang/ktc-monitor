@@ -8,7 +8,7 @@ version '1.0.5'
     supports os
 end
 
-depends "graphite"
+depends "ktc-graphite"
 depends "ktc-collectd"
 depends "ktc-sensu"
 depends "ktc-gdash"

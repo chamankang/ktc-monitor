@@ -10,4 +10,5 @@ metadata
 
 group "integration" do
   cookbook 'ktc-testing'
+  cookbook 'etcd'
 end

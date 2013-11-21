@@ -20,8 +20,4 @@ default[:monitor][:splunk][:port] = "4110"
 default[:sensu][:graphite_address] = "graphite01-vm.mgmt1.ipc-ng"
 default[:sensu][:hipchat_room] = "alert-ipc-ng"
 
-# TODO: This endpoint should be handled with Services library in ktc-gdash.
-# Until then, manually set graphite IP here or environment file.
-# This url should be IP address, not hostname.
-default[:gdash][:graphite_url] = ""
 default[:gdash][:title] = "IPC-NG"
