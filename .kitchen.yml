@@ -9,14 +9,16 @@ platforms:
     box_url: https://opscode-vm.s3.amazonaws.com/vagrant/opscode_ubuntu-12.04_chef-11.4.4.box
 
 suites:
-- name: default
+- name: collectd
   run_list:
     - recipe[ktc-testing]
+    - recipe[etcd::compile_time]
     - recipe[ktc-monitor::server_graphite]
     - recipe[ktc-monitor::server_collectd]
+    - recipe[ktc-collectd::client_collectd]
   attributes:
-    monitor:
-      recipes_server_collectd:
-        - graphite
-        - collectd::server
-        - ktc-collectd::client_graphite
+    etcd:
+      args: '-c 127.0.0.1:4001 -s 127.0.0.1:7001 -f'
+      servers:
+        - 127.0.0.1
+    ha_disabled: true
