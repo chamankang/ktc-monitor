@@ -8,7 +8,11 @@ default[:monitor][:recipes_server_collectd] = %w{
 }
 
 default[:monitor][:recipes_server_graphite] = %w{
-  ktc-graphite
+  ktc-graphite::peer
+}
+
+default[:monitor][:recipes_server_graphite_master] = %w{
+  ktc-graphite::master
 }
 
 default[:monitor][:recipes_server_sensu] = %w{
