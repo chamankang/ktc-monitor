@@ -2,9 +2,9 @@
 # Attributes for ipc-ng environment
 #
 
-return unless chef_environment == "ipc-ng"
+return unless chef_environment == 'ipc-ng'
 
-include_attribute "ktc-monitor::default"
+include_attribute 'ktc-monitor::default'
 
 default[:monitor][:recipes_server_collectd] = %w{
   collectd::server
@@ -13,11 +13,11 @@ default[:monitor][:recipes_server_collectd] = %w{
 }
 
 # Forward metrics to Splunk
-default[:monitor][:splunk][:ip] = "10.2.2.81"
-default[:monitor][:splunk][:port] = "4110"
+default[:monitor][:splunk][:ip] = '10.2.2.81'
+default[:monitor][:splunk][:port] = '4110'
 
 # TODO: This endpoint shoudl be handled with Services library in ktc-sensu.
-default[:sensu][:graphite_address] = "graphite01-vm.c50811.mpod1.mgmt-dev.ipc-ng"
-default[:sensu][:hipchat_room] = "alert-ipc-ng"
+default[:sensu][:graphite_address] = 'graphite01-vm.c50811.mpod1.mgmt-dev.ipc-ng'
+default[:sensu][:hipchat_room] = 'alert-ipc-ng'
 
-default[:gdash][:title] = "IPC-NG"
+default[:gdash][:title] = 'IPC-NG'
