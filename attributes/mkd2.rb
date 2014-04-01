@@ -2,23 +2,13 @@
 # Attributes for mkd_stag environment
 #
 
-return unless chef_environment == 'mkd_stag'
+return unless chef_environment == 'mkd2'
 
 include_attribute 'ktc-monitor::default'
 
-default[:monitor][:recipes_server_collectd] = %w(
-  collectd::server
-  ktc-collectd::client_graphite
-  ktc-collectd::client_splunk
-)
-
-# Forward metrics to Splunk
-default[:monitor][:splunk][:ip] = '20.0.1.224'
-default[:monitor][:splunk][:port] = '4110'
-
 # TODO: This endpoint should be handled with Services library in ktc-sensu.
-default[:sensu][:graphite_address] = 'graphite01-vm.mkd-stag'
-default[:sensu][:hipchat_room] = 'alert-mkd-stag'
+default[:sensu][:graphite_address] = 'graphite01-vm.mkd2.ktc'
+default[:sensu][:hipchat_room] = 'alert-mkd2'
 default['sensu']['mail_to'] = [
   'js.ahn@kt.com',
   'hyunsun.moon@kt.com',
@@ -36,4 +26,4 @@ default['sensu']['mail_to'] = [
   'harry.sung@kt.com'
 ]
 
-default[:gdash][:title] = 'Mkd-Staging'
+default[:gdash][:title] = 'Mkd2'
