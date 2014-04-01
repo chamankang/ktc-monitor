@@ -23,7 +23,7 @@ default['sensu']['mail_to'] = [
   'hho.choi@kt.com',
   'chaman.kang@kt.com',
   'dongwon.cho@kt.com',
-  'harry.sung@kt.com',
+  'harry.sung@kt.com'
 ]
 
 default[:gdash][:title] = 'Mkd2'

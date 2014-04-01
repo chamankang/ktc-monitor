@@ -2,31 +2,31 @@ include_attribute 'graphite'
 include_attribute 'ktc-sensu'
 include_attribute 'ktc-gdash::default'
 
-default[:monitor][:recipes_server_collectd] = %w{
+default[:monitor][:recipes_server_collectd] = %w(
   collectd::server
   ktc-collectd::client_graphite
-}
+)
 
-default[:monitor][:recipes_server_graphite] = %w{
+default[:monitor][:recipes_server_graphite] = %w(
   ktc-graphite::peer
-}
+)
 
-default[:monitor][:recipes_server_graphite_master] = %w{
+default[:monitor][:recipes_server_graphite_master] = %w(
   ktc-graphite::master
-}
+)
 
-default[:monitor][:recipes_server_sensu] = %w{
+default[:monitor][:recipes_server_sensu] = %w(
   ktc-sensu::master
-}
+)
 
-default[:monitor][:recipes_server_gdash] = %w{
+default[:monitor][:recipes_server_gdash] = %w(
   ktc-gdash
-}
+)
 
-default[:monitor][:recipes_client] = %w{
+default[:monitor][:recipes_client] = %w(
   ktc-collectd::client_collectd
   ktc-sensu::client
-}
+)
 
 default[:monitor][:splunk][:ip] = ''
 default[:monitor][:splunk][:port] = ''
