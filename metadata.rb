@@ -4,7 +4,7 @@ license           'Apache 2.0'
 description       'monitoring cookbook'
 version '1.0.10'
 
-%w{ centos ubuntu }.each do |os|
+%w(centos ubuntu).each do |os|
   supports os
 end
 
