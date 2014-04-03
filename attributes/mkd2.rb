@@ -9,6 +9,7 @@ include_attribute 'ktc-monitor::default'
 # TODO: This endpoint should be handled with Services library in ktc-sensu.
 default[:sensu][:graphite_address] = 'graphite01-vm.mkd2.ktc'
 default[:sensu][:hipchat_room] = 'alert-mkd2'
+default['sensu']['mail_from'] = 'SENSU-MKD2 <sensu@mkd2.ng.kt.com>'
 default['sensu']['mail_to'] = [
   'js.ahn@kt.com',
   'hyunsun.moon@kt.com',
