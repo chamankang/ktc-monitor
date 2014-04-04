@@ -19,6 +19,7 @@ default[:monitor][:splunk][:port] = '4110'
 # TODO: This endpoint should be handled with Services library in ktc-sensu.
 default[:sensu][:graphite_address] = 'graphite01-vm.mkd-stag'
 default[:sensu][:hipchat_room] = 'alert-mkd-stag'
+default['sensu']['mail_from'] = 'SENSU-MKD-STAG <sensu@mkd-stag.ng.kt.com>'
 default['sensu']['mail_to'] = [
   'js.ahn@kt.com',
   'hyunsun.moon@kt.com',
