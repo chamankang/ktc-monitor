@@ -1,0 +1,67 @@
+# rubocop:disable all
+require 'rubygems'
+
+gem 'oj', '2.0.9'
+
+require File.join(File.dirname(__FILE__), '_rabbitmq')
+require 'time'
+require 'json'
+require 'oj'
+
+Oj.default_options = { mode: :compat, symbol_keys: true }
+
+class RabbitAPI
+  def initialize(host, port, config_file)
+    @settings = {}
+    @logger = Logger.new('<%= node[:monitor][:rabbit_api_logfile] %>', 'weekly')
+    @logger.level = Logger::DEBUG
+
+    load_sensu_config(config_file)
+    @settings[:rabbitmq][:host] = host
+    @settings[:rabbitmq][:port] = port
+  end
+
+  def load_sensu_config(file)
+    if File.file?(file) && File.readable?(file)
+      begin
+        contents = File.open(file, 'r').read
+        @settings = Oj.load(contents)
+        @logger.debug("Loaded Config:\n#{@settings[:rabbitmq]}")
+      rescue Oj::ParseError => error
+        @logger.error('config file is invalid. Ignoring config file..')
+      end
+    else
+      @logger.error('config file does not exist or is not readable')
+    end
+  end
+
+  def setup_rabbitmq
+    @logger.info("connecting to rabbitmq: #{@settings[:rabbitmq][:host]}:#{@settings[:rabbitmq][:port]}")
+    @rabbitmq = RabbitMQ.connect(@settings[:rabbitmq])
+    @rabbitmq.on_error do |error|
+      @logger.info("rabbitmq connection error: #{error.to_s}")
+      close
+    end
+    @rabbitmq.before_reconnect do
+      @logger.debug('reconnecting to rabbitmq')
+    end
+    @rabbitmq.after_reconnect do
+      @logger.info('reconnected to rabbitmq')
+    end
+    @amq = @rabbitmq.channel
+    @logger.debug("established channel: #{@amq.conn.broker_endpoint}")
+  end
+
+  def send_message(payload)
+    @logger.info("publishing payload: #{payload}")
+
+    result_ = @amq.direct('results').publish(Oj.dump(payload))
+  end
+
+  def close
+    EM::Timer.new(1) do
+      @rabbitmq.close
+      EM.stop_event_loop
+    end
+  end
+end

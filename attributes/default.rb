@@ -26,19 +26,22 @@ default[:monitor][:recipes_server_gdash] = %w(
 default[:monitor][:recipes_client] = %w(
   ktc-collectd::client_collectd
   ktc-sensu::client
+  ktc-monitor::library_setup
 )
 
 default[:monitor][:splunk][:ip] = ''
 default[:monitor][:splunk][:port] = ''
+
+# Shared library path that contails libraries
+# for chef sensu_handler and chef_status script.
+default[:monitor][:shared_lib_path] = '/usr/local/lib'
+default[:monitor][:rabbit_api_logfile] = '/var/log/rabbit_api.log'
 
 # TODO: This endpoint should be handled with Services library in ktc-sensu.
 default[:sensu][:graphite_address] = 'localhost'
 default[:sensu][:graphite_port] = 2003
 default[:sensu][:hipchat_room] = 'alert-test'
 
-# TODO: This endpoint should be handled with Services library in ktc-gdash.
-# This url should be IP address, not hostname.
-default[:gdash][:graphite_url] = 'http://127.0.0.1'
 default[:gdash][:title] = 'Test'
 
 default[:graphite][:storage_schemas] = [
