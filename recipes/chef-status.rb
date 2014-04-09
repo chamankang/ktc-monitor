@@ -2,13 +2,13 @@ if Chef::Config.chef_server_url.include?(node['fqdn']) ||
   Chef::Config.chef_server_url.include?(node['ipaddress'])
   include_recipe 'services'
   include_recipe 'ktc-chef'
- 
+
   ep = Services::Endpoint.new 'sensu-rabbitmq'
   ep.load
- 
+
   Chef::Log.info("rabbit host: #{ep.ip}")
   Chef::Log.info("rabbit port: #{ep.port}")
- 
+
   args = {}
   if node['kitchen']
     args = {
@@ -23,7 +23,7 @@ if Chef::Config.chef_server_url.include?(node['fqdn']) ||
       file: '/etc/sensu/config.json'
     }
   end
- 
+
   template node['chef_status']['script'] do
     source 'chef-status.erb'
     mode 0700
@@ -43,7 +43,7 @@ if Chef::Config.chef_server_url.include?(node['fqdn']) ||
     minute  node['chef_status']['cron']['minute']
     hour    node['chef_status']['cron']['hour']
     if node['chef_status']['cron']['path']
-      path    node['chef_status']['cron']['path'] 
+      path    node['chef_status']['cron']['path']
     end
     user    'root'
     command cmd
