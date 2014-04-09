@@ -1,0 +1,89 @@
+#!/opt/chef/embedded/bin/ruby
+# Managed by Chef. Changes will be overwritten.
+
+CHEF_ENV = '<%= node.environment %>'
+CLIENT_NAME = '<%= node.fqdn %>'
+HIPCHAT_API_TOKEN = '<%= @hipchat_api_token %>'
+RABBIT_API_FILE = '<%= @rabbit_api_file %>'
+SUFFERABLE_MIN = <%= @sufferable_min %>
+
+require 'chef'
+require 'chef/rest'
+require 'hipchat'
+require 'services'
+
+hipchat_client = HipChat::Client.new(HIPCHAT_API_TOKEN)
+
+load RABBIT_API_FILE
+
+rabbit_api = Chef::Handler::Sensu::RabbitAPI.new(
+              '<%= @rabbit_config['host'] %>',
+              <%= @rabbit_config['port'] %>,
+              '<%= @rabbit_config['file'] %>'
+          )
+
+chef_server_url = '<%= Chef::Config.chef_server_url %>'
+signing_key_filename = '<%= Chef::Config.client_key %>'
+
+rest = Chef::REST.new(chef_server_url, CLIENT_NAME, signing_key_filename)
+all_nodes = rest.get_rest("/search/node")["rows"]
+
+lines = Array.new
+all_nodes.sort { |n1, n2|
+  n1.name <=> n2.name
+}.each do |node|
+  difference = Time.now.to_i - node['ohai_time'].to_i
+  next if difference <= SUFFERABLE_MIN * 60
+  hours = (difference / 3600).to_i
+  difference = difference % 3600
+  minutes = (difference / 60).to_i
+  ipaddress = node.ipaddress
+  hours_text   = "#{hours} hour#{hours == 1 ? ' ' : 's'}"
+  minutes_text = "#{minutes} minute#{minutes == 1 ? ' ' : 's'}"
+  if hours >= 1
+    text = hours_text
+  else
+    text = minutes_text
+  end
+  line_parts = Array.new
+  line_parts << node['name'] << text + " ago"
+  line_parts << ipaddress if ipaddress
+
+  if node['platform']
+    platform = node['platform']
+    if node['platform_version']
+      platform << " #{node['platform_version']}"
+    end
+    line_parts << platform
+  end
+  lines << (line_parts.join(', ') + '.')
+end
+
+if lines.empty?
+  lines.unshift "All nodes in #{CHEF_ENV} ran chef-client successfully within last #{SUFFERABLE_MIN} minutes."
+  color = :yellow
+  status = 0
+else
+  l = lines.length
+  lines.unshift "#{l} node#{(l>1?'s':'')} in #{CHEF_ENV} didn't run chef-client successfully within last #{SUFFERABLE_MIN} minutes."
+  color = :red
+  status = 2
+end
+  
+hipchat_client['chef_alerts'].send('Chef', lines.join('<br>'), :notify => false, :color => color)
+
+payload = {
+  'client' => CLIENT_NAME,
+  'check' => {
+    'output' => lines.join("\n"),
+    'status' => status,
+    'name' => 'chef_status'
+  }
+}
+
+EM.threadpool_size = 14
+EM.run do
+  rabbit_api.setup_rabbitmq
+  rabbit_api.send_message(payload)
+  rabbit_api.close
+end

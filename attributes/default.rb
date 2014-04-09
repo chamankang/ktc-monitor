@@ -27,6 +27,7 @@ default[:monitor][:recipes_client] = %w(
   ktc-collectd::client_collectd
   ktc-sensu::client
   ktc-monitor::library_setup
+  ktc-monitor::chef-status
 )
 
 default[:monitor][:splunk][:ip] = ''
