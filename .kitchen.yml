@@ -17,6 +17,7 @@ suites:
     - recipe[ktc-monitor::server_collectd]
     - recipe[ktc-collectd::client_collectd]
     - recipe[ktc-monitor::library_setup]
+    - recipe[ktc-monitor::chef-status]
   attributes:
     etcd:
       addr: 127.0.0.1

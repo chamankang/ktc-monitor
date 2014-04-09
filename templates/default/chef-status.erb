@@ -16,10 +16,10 @@ hipchat_client = HipChat::Client.new(HIPCHAT_API_TOKEN)
 
 load RABBIT_API_FILE
 
-rabbit_api = Chef::Handler::Sensu::RabbitAPI.new(
-              '<%= @rabbit_config['host'] %>',
-              <%= @rabbit_config['port'] %>,
-              '<%= @rabbit_config['file'] %>'
+rabbit_api = RabbitAPI.new(
+              '<%= @rabbit_config[:host] %>',
+              <%= @rabbit_config[:port] %>,
+              '<%= @rabbit_config[:file] %>'
           )
 
 chef_server_url = '<%= Chef::Config.chef_server_url %>'
@@ -46,7 +46,7 @@ all_nodes.sort { |n1, n2|
     text = minutes_text
   end
   line_parts = Array.new
-  line_parts << node['name'] << text + " ago"
+  line_parts << node.name << text + " ago"
   line_parts << ipaddress if ipaddress
 
   if node['platform']
