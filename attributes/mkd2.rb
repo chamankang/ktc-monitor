@@ -1,10 +1,11 @@
 #
-# Attributes for mkd_stag environment
+# Attributes for mkd2 environment
 #
 
 return unless chef_environment == 'mkd2'
 
 include_attribute 'ktc-monitor::default'
+include_attribute 'ktc-monitor::chef_status'
 
 # TODO: This endpoint should be handled with Services library in ktc-sensu.
 default[:sensu][:graphite_address] = 'graphite01-vm.mkd2.ktc'
@@ -28,3 +29,4 @@ default['sensu']['mail_to'] = [
 ]
 
 default[:gdash][:title] = 'Mkd2'
+default[:chef_status][:sufferable_min] = 40
