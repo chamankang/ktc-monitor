@@ -38,11 +38,13 @@ if Chef::Config.chef_server_url.include?(node['fqdn']) ||
   end
 
   cmd = "#{node['chef_status']['script']} > #{node['chef_status']['log_file']}"
-  cmd << " 2>&1"
+  cmd << ' 2>&1'
   cron_d 'chef-status' do
     minute  node['chef_status']['cron']['minute']
     hour    node['chef_status']['cron']['hour']
-    path    node['chef_status']['cron']['path'] if node['chef_status']['cron']['path']
+    if node['chef_status']['cron']['path']
+      path    node['chef_status']['cron']['path'] 
+    end
     user    'root'
     command cmd
   end
